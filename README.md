@@ -3,4 +3,4 @@
 Lancer un serveur wildfly
 Lancer la base de données si en local (wampServer, easyPhp).
 Lancer le programme
-Sur le navigateur, aller sur localhost:8081/bankonetREST/ pour parcourir les différentes possibilités.
+Lancer un serveur lrhs -p numeroPortLibre pour tester.
