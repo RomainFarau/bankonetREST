@@ -1,4 +1,4 @@
-package com.bankonet.EJB;
+package com.bankonet.ejb;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -35,36 +35,45 @@ public class EmployeEJB {
 	@PersistenceContext(unitName="bankonetRest") private EntityManager em;
 
 	public List<Employe> findAll(){
-
-	
 		List<Employe> employes=new ArrayList<Employe>();
 		try{
-			
 			String textQuery="Select e From Employe e";
 			Query query=em.createQuery(textQuery);
 			
-			System.out.println(query);
-			
 			employes=(List<Employe>)query.getResultList();
-			
-			/*while(result.next()){
-				Employe employe=new Employe(result.getString("NOM"));
-				employe.setSalaire(BigDecimal.valueOf(Double.parseDouble(result.getString("SALAIRE"))));
-				employes.add(employe);
-			}*/
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
+		//Force l'appel aux gets
 		for(Employe e : employes) {
 			System.out.println(e.getProjets());
 			System.out.println(e.getParticipations());
 		}
 		
-		
-		//System.out.println("AAAAAAAAA");
 		return employes;
+	}
+	
+	public Employe findById(Integer id){
+		Employe employe=new Employe();
+		System.out.println("Cherche employe");
+		try{
+			//String textQuery="Select e From Employe e Where e.id='"+id.toString()+"'";
+			//Query query=em.createQuery(textQuery);
+			employe=em.find(Employe.class, id);
+			//employe=(Employe)query.getResultList().get(0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		System.out.println(employe.getProjets());
+		System.out.println(employe.getParticipations());
+		
+		return employe;
+	}
+	
+	public void addEmploye(Employe employe){
+		em.persist(employe);
 	}
 	
 	 private void closeConnection(Connection connection)

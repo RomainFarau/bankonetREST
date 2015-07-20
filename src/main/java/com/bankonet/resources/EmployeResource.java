@@ -2,13 +2,9 @@ package com.bankonet.resources;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,9 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import com.mysql.fabric.xmlrpc.Client;
-import com.bankonet.EJB.EmployeEJB;
-import com.bankonet.model.*;
+import com.bankonet.ejb.EmployeEJB;
+import com.bankonet.model.Employe;
+
 
 @Path("/employes")
 public class EmployeResource {
@@ -47,27 +43,26 @@ public class EmployeResource {
 		return employes;
 	}
 	
-	/*@GET
-	@Path("/employes/{id}")
+	@GET
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Employe findById(@PathParam("id") Integer id){
 		
-		List<Employe> employes =  ;
-		Iterator<Employe> it = employes.iterator();
-		while(it.hasNext()){
-			if(it.next().getId()==id.intValue()){
+		Employe employe=employeEjb.findById(id);
+		if(employe!=null){
 				Reponse("200");
-				return it.next();
-			}
+		}else{
+			Reponse("404 Not Found");
 		}
-		Reponse("404 Not Found");
-		return null;
+		return employe;
 	}
 	
 	@POST
-	@Path("/employes")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void addEmploye(){
+		Employe employe= new Employe();
 		
-	}*/
+		employeEjb.addEmploye(employe);
+		Reponse("200");
+	}
 }

@@ -11,4 +11,10 @@ angular.module("bankonetModule")
 		})
 	}
 	fetchEmployes();
+	function addEmploye(){
+		EmployeService.addEmploye()
+			.then(function(){
+				
+			})
+	}
 })
